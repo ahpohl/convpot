@@ -1,6 +1,14 @@
 # Convpot
 
-Convpot takes raw data from commercial potentiostats and converts them into a sqlite database ready to be visualised by plotpot.py (https://github.com/ahpohl/plotpot). Convpot is automatically called by plotpot.py, but can also be called on its own for example to merge files.
+Convpot is a converter program written in C++ which converts raw data from potentiostats into a sqlite database ready to be plotted by plotpot.py (https://github.com/ahpohl/plotpot). Convpot is automatically called by plotpot.py, but can also be called on its own for example to merge files.
+
+## Supported instruments
+
+* Arbin Instruments BT2000
+* Gamry Interface 1000
+* Biologic VMP3
+* Ivium
+* Zahner IM6
 
 ## Getting Started
 
@@ -8,13 +16,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-For compiling under Windows 64 bit
-
-```
-CMake (https://cmake.org/)
-Mingw-w64 Mingw-builds (https://mingw-w64.org/)
-
-```
+For compiling from source see the wiki pages.
 
 ### Installing
 
