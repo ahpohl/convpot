@@ -1,25 +1,20 @@
 cmake_minimum_required (VERSION 3.6.1)
 set (CMAKE_CXX_STANDARD 11)
-
 project (convpot)
 
 # bring the headers into the project
 include_directories (include)
-include_directories (sqlite/src)
 
 # the file(GLOB...) allows for wildcard additions:
 file (GLOB SOURCES "src/*.cpp")
 
-# find odbc library
-if (WIN32)
-    set (ODBC_LIB odbc32)
-    # path to windows odbc library
-    link_directories (../odbc)
-endif (WIN32) 
+# find odbc library    
+set (ODBC_LIB odbc32)
+link_directories (odbc)
 
-if (UNIX)
-    set (ODBC_LIB odbc)
-endif (UNIX)
+# build sqlite static library
+include_directories (sqlite)
+link_directories (sqlite)
 
 # link static libraries
 SET(CMAKE_FIND_LIBRARY_SUFFIXES ".a")

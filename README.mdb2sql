@@ -1,0 +1,102 @@
+Software Copyright 2014 Alexander Pohl
+All rights reserved. Use at your own risk.
+
+**************************** mdb2sql *******************************************
+
+The converter program mdb2sql converts the raw data (*.res etc.) into the sqlite
+format ready to be plotted with arbin.py. It is automatically called by
+arbin.py, but can also be called on its own for example to merge files.
+
+The --info option lists supported instruments.
+
+If multiple input files are given, mdb2sql takes care of merging the files and 
+appending the test time for each run accordingly. It performs all necessary 
+calculations of capacity, energy and dQ/dV per cycle and saves these data in 
+the sqlite file. The program recognises if the sqlite file is up to date, for 
+example if the battery is not finished cycling yet, and performs the conversion
+only once. This behaviour can be overridden with --force switch. Files to process
+can also be given in a file specified after the --list option with one file per 
+line. Lines can be commented out with the ! character.
+
+Files details, half and full cycles and data points can be output using the 
+--verbose option. The verbose option can be given multiple times. -v shows file 
+details, -vv shows a half and full cycle summary and -vvv outputs each data
+point in the file for debugging purposes.
+
+For Biologic, two and three electrode setups are supported. The potential 
+can be chosen between the working electrode (WE) and the counter electrode 
+(CE) with the --counter switch. For a full cell with three electrodes, one 
+would create two separate sqlite files, one for the cathode side with V_we and
+one for the anode side with V_ce. arbin.py has the option to call mdb2sql with 
+the --counter switch automatically.
+
+*** help output ***
+
+$ mdb2sql -h
+mdb2sql - convert potentiostat data to sqlite
+
+Usage: mdb2sql [options] file1 [file2] [file3] ... 
+
+  -h --help              Print this help message
+  -V --version           Print version info
+  -v --verbose           Be more verbose
+  -i --info              Show supported instruments
+  -c --counter           Use counter electrode potential
+  -f --force             Overwrite sqlite file, skip size check
+  -o --output [name]     Output file name, optional
+  -l --list [name]       Read files from file, optional
+
+***  Usage examples ***
+
+1. process a single file
+
+$ mdb2sql arbin.res
+INFO: Output written to arbin.sqlite
+INFO: Imported 1730 records in 0.05 seconds; 37522 records per sec.
+
+2. merge multiple files given on command line
+
+$ mdb2sql --verbose fef3_insitu_ch.txt fef3_insitu_disch.txt
+
+Please enter creation date of fef3_insitu_ch.txt (10/06/15-18:49:59): 
+Please enter creation date of fef3_insitu_disch.txt (10/06/15-18:50:03): 
+
+INFO: Output written to fef3_insitu_ch.sqlite
+INFO: Imported 17595 records in 0.55 seconds; 32259 records per sec.
+INFO: File ID: 1
+      Filename: fef3_insitu_ch.txt
+      File created: Wed Jun 10 18:49:59 2015
+      File size: 602618
+      Data points: 8861
+      Duration (s): 177200.00
+      Comment: Zahner IM6
+INFO: File ID: 2
+      Filename: fef3_insitu_disch.txt
+      File created: Wed Jun 10 18:50:03 2015
+      File size: 593982
+      Data points: 8734
+      Duration (s): 174660.00
+      Comment: Zahner IM6
+
+Note: Zahner does not save the file creation date in the file. By default
+mdb2sql uses the time at execution of the program. The actual time of data
+collection can be given in the format dd/mm/yy-hh:mm:ss, e.g. 10/06/15-
+18:49:59.
+
+3. erge files from file
+
+merge.txt:
+! denotes a comment
+AP019a.res
+AP019f.res
+! NMC_coincell_06.res
+
+$ mdb2sql --list merge.txt 
+INFO: Output written to arbin_short.sqlite
+INFO: Imported 71 records in 0.02 seconds; 3562 records per sec.
+
+$ mdb2sql --output merge.sqlite --list files.txt
+INFO: Output written to merge.sqlite
+INFO: Imported 71 records in 0.02 seconds; 4370 records per sec.
+
+
