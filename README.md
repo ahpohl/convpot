@@ -7,7 +7,7 @@ Convpot is a converter program written in C++ which converts raw data from poten
 * Arbin Instruments BT2000
 * Gamry Interface 1000
 * Biologic VMP3
-* Ivium
+* Ivium CompactStat
 * Zahner IM6
 
 ## Getting Started
