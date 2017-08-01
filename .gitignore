@@ -1,3 +1,4 @@
+*~
 test/*.sqlite
 odbc/*.dll
-*.~
+build/*

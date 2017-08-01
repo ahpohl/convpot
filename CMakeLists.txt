@@ -1,9 +1,14 @@
+# Specify the minimum version for CMake
 cmake_minimum_required (VERSION 3.6.1)
-set (CMAKE_CXX_STANDARD 11)
+
+# Project's name
 project (convpot)
 
-# bring the headers into the project
-include_directories (include)
+# Require the compiler to support at least C++11
+set (CMAKE_CXX_STANDARD 11)
+
+# build sqlite library
+add_subdirectory (sqlite)
 
 # the file(GLOB...) allows for wildcard additions:
 file (GLOB SOURCES "src/*.cpp")
@@ -12,11 +17,11 @@ file (GLOB SOURCES "src/*.cpp")
 set (ODBC_LIB odbc32)
 link_directories (odbc)
 
-# build sqlite static library
-include_directories (sqlite)
-link_directories (sqlite)
+# bring the headers into the project
+include_directories (include)
+include_directories (sqlite/include)
 
-# link static libraries
+# find external libraries
 SET(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
 SET(CMAKE_EXE_LINKER_FLAGS "-static")
 SET(BUILD_SHARED_LIBRARIES OFF)
