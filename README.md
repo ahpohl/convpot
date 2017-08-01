@@ -1,6 +1,6 @@
 # Convpot
 
-Convpot is a converter program written in C++ which converts raw data from potentiostats into a sqlite database ready to be plotted by plotpot.py (https://github.com/ahpohl/plotpot). Convpot is automatically called by plotpot.py, but can also be called on its own for example to merge files.
+Convpot is a converter program written in C++ which converts raw data from potentiostats into a sqlite database ready to be plotted by [plotpot.py](https://github.com/ahpohl/plotpot). Convpot is automatically called by plotpot.py, but can also be called on its own for example to merge files.
 
 ## Supported instruments
 
@@ -16,7 +16,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-For compiling from source see the wiki pages.
+For compiling from source see the [wiki pages](https://github.com/ahpohl/convpot/wiki).
 
 ### Installing
 
