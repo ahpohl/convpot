@@ -221,9 +221,9 @@ void Setup::displayHeader()
 	cout << "\
 +-----------------------------------------------------------------------+\n\
 | Author      : Alexander Pohl                                          |\n\
-| Copyright   : GPL                                                     |\n\
+| License     : MIT                                                     |\n\
 | Version     : " << args.version << setw(56 - length) << " " << "|\n\
-| Description : converter for potentiostatic files into sqlite database |\n\
+| Description : Converter for potentiostat data into a SQLite database  |\n\
 +-----------------------------------------------------------------------+\n\
 " << endl;
 }
