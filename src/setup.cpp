@@ -223,7 +223,7 @@ void Setup::displayHeader()
 | Author      : Alexander Pohl                                          |\n\
 | License     : MIT                                                     |\n\
 | Version     : " << args.version << setw(56 - length) << " " << "|\n\
-| Description : Converter for potentiostat data into a SQLite database  |\n\
+| Description : Convert potentiostat data to a SQLite database          |\n\
 +-----------------------------------------------------------------------+\n\
 " << endl;
 }
