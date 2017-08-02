@@ -1,20 +1,20 @@
 # Convpot
 
-Convpot is a converter program written in C++ which converts raw data from potentiostats into a sqlite database ready to be plotted by [plotpot.py](https://github.com/ahpohl/plotpot). Convpot is automatically called by plotpot.py, but can also be called on its own for example to merge files.
+Convpot is a converter program written in C++ which converts raw data from potentiostats into a sqlite database ready to be plotted by [plotpot.py](https://github.com/ahpohl/plotpot). Convpot is automatically called by plotpot.py, but can also be called on its own for example to merge files. 
 
 ## Supported instruments
 
-* Arbin Instruments BT2000
-* Gamry Interface 1000
-* Biologic VMP3
-* Ivium CompactStat
-* Zahner IM6
+* Arbin Instruments BT2000 (\*.res)
+* Gamry Interface 1000 (\*.DTA)
+* Biologic VMP3 (\*.mpt)
+* Ivium CompactStat (\*.idf)
+* Zahner IM6 (\*.txt)
 
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-### Prerequisites
+### Compiling from source
 
 For compiling from source see the [wiki pages](https://github.com/ahpohl/convpot/wiki).
 
@@ -22,55 +22,33 @@ For compiling from source see the [wiki pages](https://github.com/ahpohl/convpot
 
 A step by step series of examples that tell you have to get a development env running
 
-Say what the step will be
+## Usage
 
-```
-Give the example
-```
+### Single files
 
-And repeat
+To process a single input file
 
-```
-until finished
-```
+´convpot arbintest.res´
 
-End with an example of getting some data out of the system or using it for a little demo
+The output is the corresponding SQLite database containing the raw data. You can use the --output option to give a different filename.
 
-## Running the tests
+### Merging files
 
-Explain how to run the automated tests for this system
+To process multiple files
 
-### Break down into end to end tests
+´convpot arbintest.res gamrytest.dta´
 
-Explain what these tests test and why
+Alternatively, the files to merge can be given in a text file listed one by line. Lines starting with the "!" character are ignored.
 
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
+´convpot --file files_to_merge.txt´
 
 ## Deployment
 
 Add additional notes about how to deploy this on a live system
 
-## Built With
-
-* [SQLite3] (https://www.sqlite.org/)
-
 ## Contributing
 
 Please read [CONTRIBUTING.md](https://github.com/ahpohl/convpot/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
 ## Authors
 
@@ -81,10 +59,3 @@ See also the list of [contributors](https://github.com/your/project/contributors
 ## License
 
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
-
