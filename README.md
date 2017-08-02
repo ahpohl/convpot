@@ -40,10 +40,6 @@ Alternatively, the files to merge can be given in a text file listed one by line
 
 `convpot --file files_to_merge.txt`
 
-## Contributing
-
-Please read [CONTRIBUTING.md](https://github.com/ahpohl/convpot/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
-
 ## Authors
 
 * **Alexander Pohl** - *Initial work*
@@ -52,4 +48,4 @@ See also the list of [contributors](https://github.com/ahpohl/convpot/blob/maste
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details
+This project is licensed under the MIT license - see the [LICENSE](LICENSE) file for details
