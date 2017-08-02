@@ -44,7 +44,7 @@ Alternatively, the files to merge can be given in a text file listed one by line
 
 * **Alexander Pohl** - *Initial work*
 
-See also the list of [contributors](https://github.com/ahpohl/convpot/blob/master/contributors) who participated in this project.
+See also the list of [CONTRIBUTORS](https://github.com/ahpohl/convpot/blob/master/CONTRIBUTORS.md) who participated in this project.
 
 ## License
 
