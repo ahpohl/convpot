@@ -29,3 +29,12 @@ SET(BUILD_SHARED_LIBRARIES OFF)
 # build and link
 add_executable (convpot ${SOURCES})
 target_link_libraries (convpot m sqlite3 ${ODBC_LIB})
+
+# build a CPack driven installer package
+include (InstallRequiredSystemLibraries)
+set (CPACK_RESOURCE_FILE_LICENSE  
+     "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+set (CPACK_PACKAGE_VERSION_MAJOR "1")
+set (CPACK_PACKAGE_VERSION_MINOR "0")
+include (CPack)
+
