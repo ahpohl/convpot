@@ -31,11 +31,11 @@ add_executable (convpot ${SOURCES})
 target_link_libraries (convpot m sqlite3 ${ODBC_LIB})
 
 # build a CPack driven installer package
-set (CPACK_GENERATOR "ZIP;NSIS")
+include (InstallRequiredSystemLibraries)
+set (CPACK_GENERATOR "ZIP")
 set (CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 set (CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 set (CPACK_PACKAGE_VERSION_MAJOR "1")
 set (CPACK_PACKAGE_VERSION_MINOR "0")
-include (InstallRequiredSystemLibraries)
 include (CPack)
 
