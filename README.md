@@ -44,11 +44,11 @@ The output is the corresponding SQLite database containing the raw data. You can
 
 To process multiple files
 
-`convpot arbintest.res gamrytest.dta`
+`convpot arbintest.res gamrytest.DTA`
 
 Alternatively, the files to merge can be given in a text file listed one by line. Lines starting with the "!" character are ignored.
 
-`convpot --file files_to_merge.txt`
+`convpot --merge files_to_merge.txt`
 
 ### Command-line Options
 
