@@ -325,13 +325,13 @@ void Setup::parseListFile()
 void Setup::setOutputFilename()
 {
 	// --output option given, use it
-	if ( args.outputFilename ) {
+	if ( !args.outputFilename.empty() ) {
 		args.outputFilename = args.outputFilename.substr(
 			0, args.outputFilename.find_last_of('.'))+".sqlite";
 	}
 	
 	// --merge option given, use name of file with filenames
-	else if ( args.listFilename ) {
+	else if ( !args.listFilename.empty() ) {
 		args.outputFilename = args.listFilename.substr(
 			0, args.listFilename.find_last_of('.'))+".sqlite";	
 	}
