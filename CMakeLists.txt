@@ -61,6 +61,6 @@ set (CPACK_NSIS_URL_INFO_ABOUT "https://github.com/ahpohl")
 set (CPACK_NSIS_MENU_LINKS "convpot.bat" "Run Convpot"
                            "examples" "Examples"
                            "${CPACK_NSIS_HELP_LINK}" "GitHub page")
-set (CPACK_NSIS_MODIFY_PATH OFF)
+set (CPACK_NSIS_MODIFY_PATH ON)
                            
 include (CPack)
