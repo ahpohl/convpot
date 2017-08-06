@@ -147,9 +147,9 @@ void Setup::parseCmdLine()
         { "verbose", no_argument, NULL, 'v' },
         { "info", no_argument, NULL, 'i' },
         { "output", required_argument, NULL, 'o' },
-        { "file", required_argument, NULL, 'f' },
-		{ "timer", no_argument, NULL, 't' },
-		{ "smooth", required_argument, NULL, 's'},
+        { "merge", required_argument, NULL, 'm' },
+	{ "timer", no_argument, NULL, 't' },
+	{ "smooth", required_argument, NULL, 's'},
         { NULL, 0, NULL, 0 }
     };
 
@@ -181,7 +181,7 @@ void Setup::parseCmdLine()
 			args.outputFilename = optarg;
 			break;
 
-		case 'f':
+		case 'm':
 			args.listFilename = optarg;
 			break;
 
@@ -234,14 +234,14 @@ void Setup::displayHelp()
 {
 	cout << endl << "Usage: " << argv[0] << " [options] file1 [file2] [file3] ..." << endl << endl;
 	cout << "\
-  -h --help              Print this help message\n\
-  -V --version           Print version info\n\
-  -v --verbose           Be more verbose\n\
-  -i --info              Show supported instruments\n\
-  -t --timer             Benchmark program run time\n\
-  -o --output [file]     Output file name, optional\n\
-  -f --file [file]       Read files from file, optional\n\
-  -s --smooth [1,2,3,4]  Smooth current and voltage data" << endl << endl;
+  -h --help            Show help message\n\
+  -V --version         Show version info\n\
+  -v --verbose         Increase screen output\n\
+  -i --info            Show supported instruments\n\
+  -t --timer           Benchmark program run time\n\
+  -o --output FILE     Change output filename\n\
+  -m --merge FILE      Merge files given in file\n\
+  -s --smooth LEVEL    Smooth current and voltage data (1-4)" << endl << endl;
 }
 
 // display info
