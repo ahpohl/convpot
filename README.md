@@ -33,7 +33,7 @@ For compiling from source see the [wiki pages](https://github.com/ahpohl/convpot
 
 ## Usage
 
-### Single files
+### Single file
 
 To process a single input file
 
@@ -41,7 +41,7 @@ To process a single input file
 
 The output is the corresponding SQLite database containing the raw data. You can use the --output option to give a different filename.
 
-### Merging files
+### Merge files
 
 To process multiple files
 
