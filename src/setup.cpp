@@ -324,14 +324,22 @@ void Setup::parseListFile()
 // set output filename in args
 void Setup::setOutputFilename()
 {
-	// --output option not given, use name of first file
-	if ( args.outputFilename.empty() ) {
-		args.outputFilename = args.fileNames.at(0).substr(
-				0, args.fileNames.at(0).find_last_of('.'))+".sqlite";
-	} else {
-	// use --output option, add extension
+	// --output option given, use it
+	if ( args.outputFilename ) {
 		args.outputFilename = args.outputFilename.substr(
-		0, args.outputFilename.find_last_of('.'))+".sqlite";
+			0, args.outputFilename.find_last_of('.'))+".sqlite";
+	}
+	
+	// --merge option given, use name of file with filenames
+	else if ( args.listFilename ) {
+		args.outputFilename = args.listFilename.substr(
+			0, args.listFilename.find_last_of('.'))+".sqlite";	
+	}
+		
+	// --output option not given, use name of first file
+	else {
+		args.outputFilename = args.fileNames.at(0).substr(
+			0, args.fileNames.at(0).find_last_of('.'))+".sqlite";
 	}
 }
 
