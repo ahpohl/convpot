@@ -16,13 +16,12 @@ Convpot is a converter program written in C++ which converts raw data from poten
 
 Follow these instructions (for Windows):
 
-1. Download the latest [convpot release](https://github.com/ahpohl/convpot/releases/latest) from GitHub.
-1. Extract the zip archive to `C:\Program Files (x86)\convpot`.
-1. Add the folder `C:\Program Files (x86)\convpot\convpot-x.y.z-win32\bin` to the PATH variable for the current user.
-1. Open a CMD window by typing `cmd` into the "Search programs and files" start menu field.
-1. Change to the examples folder and run a test:
+1. Download the latest [convpot installer](https://github.com/ahpohl/convpot/releases/latest) from GitHub.
+1. Run the installer `convpot-x.y.z-win32.exe` using defaults.
+1. Optionally add Convpot to the PATH variable for the current user or the system.
+1. Navigate to the Convpot menu entry and click on `Run Convpot`.
+1. A Cmd window opens. You can now run one of the examples:
 ```
-cd C:\Program Files (x86)\convpot\convpot-x.y.z-win32\examples
 convpot arbintest.res
 ```
 If all goes well you should now have the file `arbintest.sqlite` created.
@@ -50,6 +49,17 @@ To process multiple files
 Alternatively, the files to merge can be given in a text file listed one by line. Lines starting with the "!" character are ignored.
 
 `convpot --file files_to_merge.txt`
+
+### Command-line Options
+
+* **--help or -h** - show convpot help
+* **--version or -V** - show the version header
+* **--verbose or -v** - print verbose output, can be given multiple times to increase verbosity
+* **--info or -i** - display supported instruments
+* **--timer** - benchmark the program run time, useful for very large files
+* **--output FILE** - give alternative output filename. The default is the name of the first input file (but with sqlite extenstion)
+* **--file FILES-TO-MERGE** - a test file with filenames to merge one by line. A "!" denotes a comment.
+* **--smooth LEVEL** - smooth current and voltage data (level 1-4). Useful for dQ/dV plots which show artefacts due to noise.
 
 ## Authors
 
