@@ -14,7 +14,17 @@ Convpot is a converter program written in C++ which converts raw data from poten
 
 ### Installing
 
-A step by step series of examples that tell you have to get a development env running
+Under Windows follow these instructions:
+
+1. Download the latest convpot [release].
+1. Extract the zip archive to `C:\Program Files (x86)\convpot`.
+1. Add the folder `C:\Program Files (x86)\convpot\convpot-x.y.z-win32\bin` to the PATH variable for the current user.
+1. Open a CMD window and change to the examples folder
+```
+cd C:\Program Files (x86)\convpot\convpot-x.y.z-win32\examples
+convpot arbintest.res
+```
+If the installation was successful you should now have the file `arbintest.sqlite`.
 
 ### Compiling from source
 
