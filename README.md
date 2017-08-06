@@ -57,8 +57,8 @@ Alternatively, the files to merge can be given in a text file listed one by line
 * **--verbose or -v** - print verbose output, can be given multiple times to increase verbosity
 * **--info or -i** - display supported instruments
 * **--timer** - benchmark the program run time, useful for very large files
-* **--output or -o FILE** - give alternative output filename. The default is the name of the first input file (but with sqlite extenstion)
-* **--merge or -m FILE** - a file with filenames to merge one by line. A "!" denotes a comment.
+* **--output FILE** - give alternative output filename. The default is the name of the first input file
+* **--merge FILE** - a file with filenames to merge one by line. A "!" denotes a comment.
 * **--smooth LEVEL** - smooth current and voltage data (level 1-4). Useful for dQ/dV plots which show artefacts due to noise.
 
 ## Authors
