@@ -1,6 +1,7 @@
 #include "main.h"
 #include "util.h"
 #include "setup.h"
+#include "version.h"
 
 #include <iostream>
 #include <iomanip>
@@ -24,7 +25,8 @@ Setup::Setup(int argc, char** argv)
 	args = {0};
 
 	// set version
-	args.version = VERSION;
+	args.fullVersion = VERSION_FULL;
+	args.shortVersion = VERSION_SHORT;
 
 	// define instruments
 	setDevices();
@@ -77,7 +79,6 @@ void Setup::errorHandler(ReturnCodes ret, const string& msg)
 
 	case CodeVersionRequested:
 		displayHeader();
-		//cout << "Version: " << args.version << endl;
 		throw return_exception();
 		break;
 
@@ -216,13 +217,13 @@ void Setup::parseCmdLine()
 // display header
 void Setup::displayHeader()
 {
-	int length = args.version.length();
+	int length = args.fullVersion.length();
 
 	cout << "\
 +-----------------------------------------------------------------------+\n\
 | Author      : Alexander Pohl                                          |\n\
 | License     : MIT                                                     |\n\
-| Version     : " << args.version << setw(56 - length) << " " << "|\n\
+| Version     : " << args.fullVersion << setw(56 - length) << " " << "|\n\
 | Description : Convert potentiostat data to a SQLite database          |\n\
 +-----------------------------------------------------------------------+\n\
 " << endl;

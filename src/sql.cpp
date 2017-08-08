@@ -59,7 +59,7 @@ Mdb_Version TEXT)";
 	// insert values
 	sqlQuery = "INSERT INTO Global_Table VALUES (" +
 			util::toString(args.fileSizeSum) +
-			",0,0,0,0,0,0,'" + args.version + "')";
+			",0,0,0,0,0,0,'" + args.fullVersion + "')";
 	execQuery(sqlQuery);
 }
 

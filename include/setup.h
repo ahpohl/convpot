@@ -1,10 +1,6 @@
 #ifndef SETUP_H
 #define SETUP_H
 
-#ifndef VERSION
-#define VERSION "version-git"
-#endif
-
 #include <vector>
 #include <map>
 #include <chrono>
@@ -47,7 +43,8 @@ struct global_t {
     size_t fileSizeSum;		       	// total file size of all input files
     size_t recordsSum;       		// total data records
     double testTimeSum;      		// total test time
-    std::string version;			// program version
+    std::string fullVersion;		// full git version
+    std::string shortVersion;		// short version 
     int smooth;						// smooth, integer 1-4
 };
 

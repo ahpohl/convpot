@@ -1,0 +1,4 @@
+#include "version.h"
+
+const std::string VERSION_FULL = "@GIT_VERSION_FULL@";
+const std::string VERSION_SHORT = "@GIT_VERSION_SHORT@";
