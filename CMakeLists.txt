@@ -8,7 +8,8 @@ project (Convpot)
 set (CMAKE_CXX_STANDARD 11)
 
 # get git version
-execute_process (COMMAND git describe --tags --dirty OUTPUT_VARIABLE GIT_VERSION_FULL)                 
+execute_process (COMMAND git describe --tags --dirty OUTPUT_VARIABLE GIT_VERSION_FULL)
+string (REGEX REPLACE "\n$" "" GIT_VERSION_FULL "${GIT_VERSION_FULL}")
 string (REGEX REPLACE "^v([0-9]+)\\..*" "\\1" CPACK_PACKAGE_VERSION_MAJOR "${GIT_VERSION_FULL}")
 string (REGEX REPLACE "^v[0-9]+\\.([0-9]+).*" "\\1" CPACK_PACKAGE_VERSION_MINOR "${GIT_VERSION_FULL}")
 string (REGEX REPLACE "^v[0-9]+\\.[0-9]+\\.([0-9]+).*" "\\1" CPACK_PACKAGE_VERSION_PATCH "${GIT_VERSION_FULL}")
@@ -33,23 +34,28 @@ set (CMAKE_FIND_LIBRARY_SUFFIXES ".a")
 set (CMAKE_EXE_LINKER_FLAGS "-static")
 set (BUILD_SHARED_LIBRARIES OFF)
 
-# build and link
-add_executable (convpot ${SOURCES})
-target_link_libraries (convpot m sqlite3 ${ODBC_LIB})
-install (TARGETS convpot RUNTIME DESTINATION "bin")
-
 # configure files and folderes
 set (RESOURCE_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/resources")
 set (CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 set (CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 set (INSTALL_PATH "${CMAKE_INSTALL_PREFIX} ${GIT_VERSION_SHORT}")
 string (REGEX REPLACE "/" "\\\\" INSTALL_PATH ${INSTALL_PATH}) 
+set (VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/version.cpp") 
 
 # configure INSTALL_PATH in convpot.bat
 configure_file (${RESOURCE_FOLDER}/convpot.bat.in
                 ${CMAKE_BINARY_DIR}/convpot.bat)
+
+# configure version.cpp
+configure_file (${RESOURCE_FOLDER}/version.cpp.in
+                ${CMAKE_BINARY_DIR}/version.cpp)
+
+# build and link
+add_executable (convpot ${SOURCES} ${VERSION_FILE})
+target_link_libraries (convpot m sqlite3 ${ODBC_LIB})
  
 # install files and folders
+install (TARGETS convpot RUNTIME DESTINATION "bin")
 install (FILES "${CMAKE_BINARY_DIR}/convpot.bat" DESTINATION ".")
 install (FILES ${CPACK_RESOURCE_FILE_LICENSE} DESTINATION "doc")
 install (FILES ${CPACK_RESOURCE_FILE_README} DESTINATION "doc")

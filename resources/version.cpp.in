@@ -1,4 +1,4 @@
-#include "../src/version.h" //update as appropriate
+#include "version.h"
 
-const std::string gGIT_VERSION = "@VERSION@";
-const std::string gGIT_VERSION_SHORT = "@VERSION_SHORT@";
+const std::string VERSION_FULL = "@GIT_VERSION_FULL@";
+const std::string VERSION_SHORT = "@GIT_VERSION_SHORT@";

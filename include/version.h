@@ -3,7 +3,7 @@
 
 #include <string>
 
-extern const std::string gGIT_VERSION;
-extern const std::string gGIT_VERSION_SHORT;
+extern const std::string VERSION_FULL;
+extern const std::string VERSION_SHORT;
 
 #endif //VERSION_H
