@@ -1,0 +1,4 @@
+echo off
+set PATH=@INSTALL_PATH@\bin;%PATH%
+cd "@INSTALL_PATH@\examples"
+"C:\windows\system32\cmd.exe"
