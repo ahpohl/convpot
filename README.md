@@ -67,6 +67,10 @@ Alternatively, the files to merge can be given in a text file listed one by line
 
 See also the list of [CONTRIBUTORS](https://github.com/ahpohl/convpot/blob/master/CONTRIBUTORS.md) who participated in this project.
 
+## Changelog
+
+All notable changes and releases are documented in the [CHANGELOG](https://github.com/ahpohl/convpot/blob/master/CHANGELOG.md).
+
 ## License
 
 This project is licensed under the MIT license - see the [LICENSE](LICENSE) file for details
