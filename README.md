@@ -69,7 +69,7 @@ See also the list of [CONTRIBUTORS](https://github.com/ahpohl/convpot/blob/maste
 
 ## Changelog
 
-All notable changes to this project will be documented in the [CHANGELOG.md](https://github.com/ahpohl/convpot/blob/master/CHANGELOG.md) file.
+All notable changes and releases are documented in the [CHANGELOG](https://github.com/ahpohl/convpot/blob/master/CHANGELOG.md).
 
 ## License
 
