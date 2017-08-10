@@ -60,6 +60,7 @@ install (FILES "${CMAKE_BINARY_DIR}/convpot.bat" DESTINATION ".")
 install (FILES ${CPACK_RESOURCE_FILE_LICENSE} DESTINATION "doc")
 install (FILES ${CPACK_RESOURCE_FILE_README} DESTINATION "doc")
 install (FILES "${CMAKE_CURRENT_SOURCE_DIR}/CONTRIBUTORS.md" DESTINATION "doc")
+install (FILES "${CMAKE_CURRENT_SOURCE_DIR}/CHANGELOG.md" DESTINATION "doc")
 install (DIRECTORY "${PROJECT_SOURCE_DIR}/test/" DESTINATION "examples")
 
 # build a CPack driven installer package               
