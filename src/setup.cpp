@@ -242,7 +242,7 @@ void Setup::displayHelp()
   -t --timer           Benchmark program run time\n\
   -o --output FILE     Change output filename\n\
   -m --merge FILE      Merge files given in file\n\
-  -s --smooth LEVEL    Smooth current and voltage data (1-4)" << endl << endl;
+  -s --smooth LEVEL    Smooth current and voltage data" << endl << endl;
 }
 
 // display info
