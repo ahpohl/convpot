@@ -17,13 +17,13 @@ Convpot is a converter program written in C++ which converts raw data from poten
 Follow these instructions (for Windows):
 
 1. Download the latest [convpot installer](https://github.com/ahpohl/convpot/releases/latest) from GitHub.
-1. Run the installer `convpot-x.y.z-win32.exe` and choose the option to add Convpot to the PATH variable for the current user or system-wide.
-1. Navigate to the Convpot menu entry and click on `Run Convpot`.
+1. Run the installer ``convpot-x.y.z-win32.exe`` and choose the option to add Convpot to the PATH variable for the current user or system-wide.
+1. Navigate to the Convpot menu entry and click on ``Run Convpot``.
 1. A Cmd window opens. You can now run one of the examples:
 ```
 convpot arbintest.res
 ```
-If all goes well you should now have the file `arbintest.sqlite` created.
+If all goes well you should now have the file ``arbintest.sqlite`` created.
 
 ### Compiling from source
 
@@ -35,7 +35,9 @@ For compiling from source see the [wiki pages](https://github.com/ahpohl/convpot
 
 To process a single input file
 
-`convpot arbintest.res`
+```
+convpot arbintest.res`
+```
 
 The output is the corresponding SQLite database containing the raw data. You can use the --output option to give a different filename.
 
@@ -43,11 +45,15 @@ The output is the corresponding SQLite database containing the raw data. You can
 
 To process multiple files
 
-`convpot arbintest.res gamrytest.DTA`
+```
+convpot arbintest.res gamrytest.DTA
+```
 
 Alternatively, the files to merge can be given in a text file listed one by line. Lines starting with the "!" character are ignored.
 
-`convpot --merge files_to_merge.txt`
+```
+convpot --merge files_to_merge.txt
+```
 
 ### Command-line Options
 
@@ -58,7 +64,7 @@ Alternatively, the files to merge can be given in a text file listed one by line
 * **--timer** - benchmark the program run time, useful for very large files
 * **--output FILE** - give alternative output filename. The default is the name of the first input file
 * **--merge FILE** - a file with filenames to merge one by line. A "!" denotes a comment.
-* **--smooth LEVEL** - smooth current and voltage data (level 1-4). Useful for dQ/dV plots which show artefacts due to noise.
+* **--smooth LEVEL** - smooth current and voltage data. Useful for dQ/dV plots which show artefacts due to noise.
 
 ## Authors
 
