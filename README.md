@@ -36,7 +36,7 @@ For compiling from source see the [wiki pages](https://github.com/ahpohl/convpot
 To process a single input file
 
 ```
-convpot arbintest.res`
+convpot arbintest.res
 ```
 
 The output is the corresponding SQLite database containing the raw data. You can use the --output option to give a different filename.
