@@ -3,6 +3,7 @@
 #include "msql.h"
 
 #include <iostream>
+#include <ctime>
 using namespace std;
 
 // sql constructor
@@ -47,18 +48,20 @@ void Sql::writeGlobalTable()
 	// create table
 	sqlQuery = "CREATE TABLE Global_Table (\
 File_Size INTEGER, \
+DateTime INTEGER, \
 Mass DOUBLE,\
 Capacity DOUBLE,\
 Area DOUBLE,\
 Density DOUBLE,\
 Thickness DOUBLE,\
 Volume DOUBLE,\
-Mdb_Version TEXT)";
+Version TEXT)";
 	execQuery(sqlQuery);
 
 	// insert values
 	sqlQuery = "INSERT INTO Global_Table VALUES (" +
 			util::toString(args.fileSizeSum) +
+			std::time(0) +
 			",0,0,0,0,0,0,'" + args.fullVersion + "')";
 	execQuery(sqlQuery);
 }
