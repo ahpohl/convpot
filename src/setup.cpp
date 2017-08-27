@@ -154,7 +154,7 @@ void Setup::parseCmdLine()
         { NULL, 0, NULL, 0 }
     };
 
-    const char* optString = "hVvio:f:ts:";
+    const char* optString = "hVvio:m:ts:";
     int opt = 0;
     int longIndex = 0;
 
