@@ -61,7 +61,7 @@ Version TEXT)";
 	// insert values
 	sqlQuery = "INSERT INTO Global_Table VALUES (" +
 			util::toString(args.fileSizeSum) +
-			std::time(0) +
+			util::toString(std::time(0)) +
 			",0,0,0,0,0,0,'" + args.fullVersion + "')";
 	execQuery(sqlQuery);
 }
