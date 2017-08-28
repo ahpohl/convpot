@@ -50,11 +50,10 @@ void Sql::writeGlobalTable()
 File_Name TEXT, \
 File_Size INTEGER, \
 DateTime INTEGER, \
+Data_Points INTEGER, \
 Mass DOUBLE,\
 Capacity DOUBLE,\
 Area DOUBLE,\
-Density DOUBLE,\
-Thickness DOUBLE,\
 Volume DOUBLE,\
 Version TEXT)";
 	execQuery(sqlQuery);
@@ -63,8 +62,10 @@ Version TEXT)";
 	sqlQuery = "INSERT INTO Global_Table VALUES ('" +
 			args.outputFilename + "'," +
 			util::toString(args.fileSizeSum) + "," +
-			util::toString(time(0)) +
-			",0,0,0,0,0,0,'" + args.fullVersion + "')";
+			util::toString(time(0)) + "," +
+			util::toString(args.recordsSum) +
+			",0,0,0,0,'" + 
+			args.fullVersion + "')";
 	execQuery(sqlQuery);
 }
 
