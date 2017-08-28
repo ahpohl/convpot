@@ -47,6 +47,7 @@ void Sql::writeGlobalTable()
 
 	// create table
 	sqlQuery = "CREATE TABLE Global_Table (\
+File_Name TEXT, \
 File_Size INTEGER, \
 DateTime INTEGER, \
 Mass DOUBLE,\
@@ -59,7 +60,8 @@ Version TEXT)";
 	execQuery(sqlQuery);
 
 	// insert values
-	sqlQuery = "INSERT INTO Global_Table VALUES (" +
+	sqlQuery = "INSERT INTO Global_Table VALUES ('" +
+			args.outputFilename + "'," +
 			util::toString(args.fileSizeSum) + "," +
 			util::toString(time(0)) +
 			",0,0,0,0,0,0,'" + args.fullVersion + "')";

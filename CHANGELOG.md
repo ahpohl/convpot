@@ -1,7 +1,7 @@
 # Convpot changelog
 
 ## v1.1.1 - 2017-08-27
-* add creation date column to Global_Table
+* add file name and creation date columns to Global_Table
 * fix typo in short option argument (-m)
 
 ## v1.1.0 - 2017-08-09
