@@ -269,11 +269,11 @@ void Setup::setDevices()
 {
 	// instruments
 	args.device.insert(make_pair("res", "Arbin BT2000"));
-	args.device.insert(make_pair("mpt", "Biologic VMP3 text"));
+	args.device.insert(make_pair("mpt", "Biologic VMP3"));
 	args.device.insert(make_pair("DTA", "Gamry Interface 1000"));
 	args.device.insert(make_pair("idf", "Ivium CompactStat"));
 	args.device.insert(make_pair("txt", "Zahner IM6"));
-	args.device.insert(make_pair("mpr", "Biologic VMP3 binary"));
+	args.device.insert(make_pair("mpr", "Biologic VMP3"));
 
 	// plot data types
 	args.plots.insert(make_pair(CodeIVCurve, "IV curve"));
