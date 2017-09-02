@@ -1,5 +1,9 @@
 # Convpot changelog
 
+## v1.2.0 - 2017-09-02
+* verbose option can be given multiple times
+* do full cell calculations for working and counter electrodes
+
 ## v1.1.1 - 2017-08-27
 * add file name and creation date columns to Global_Table
 * fix typo in short option argument (-m)

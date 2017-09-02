@@ -33,7 +33,7 @@ enum ReturnCodes
 struct global_t {
     bool isVersion;            		// -V option, flag
     bool isCounterElectrode;   		// -c option, flag
-    bool isVerbose;          		// -v option, flag
+    int verbosity;          		// -v option, flag
     bool isTimer;					// -b option, flag
     std::string listFilename;		// -f option, list file name
 	std::string outputFilename;		// -o option, output file name
