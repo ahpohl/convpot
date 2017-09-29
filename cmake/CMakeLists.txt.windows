@@ -32,12 +32,12 @@ set (CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 set (INSTALL_PATH "${CMAKE_INSTALL_PREFIX} ${GIT_VERSION_SHORT}")
 string (REGEX REPLACE "/" "\\\\" INSTALL_PATH ${INSTALL_PATH}) 
 
+# build and include version.cpp from git tag
+include (cmake/gitversion.cmake)
+
 # configure INSTALL_PATH in convpot.bat
 configure_file (${RESOURCE_FOLDER}/convpot.bat.in
                 ${CMAKE_BINARY_DIR}/convpot.bat)
-
-# build and include version.cpp from git tag
-include (cmake/gitversion.cmake)
 
 # build and link
 add_executable (convpot ${SOURCES} ${VERSION_FILE})
