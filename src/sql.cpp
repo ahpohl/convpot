@@ -133,17 +133,19 @@ Test_Time DOUBLE,\
 Step_Time DOUBLE,\
 Localtime TEXT,\
 DateTime DOUBLE,\
+Aux_Channel DOUBLE,\
 Current DOUBLE,\
+Capacity DOUBLE,\
 Voltage DOUBLE,\
 Voltage2 DOUBLE,\
-Capacity DOUBLE,\
 Energy DOUBLE,\
+Energy2 DOUBLE,\
 dQdV DOUBLE,\
-Aux_Channel DOUBLE)";
+dQdV2 DOUBLE)";
 	execQuery(sqlQuery);
 
 	// bind records
-	sqlQuery = "INSERT INTO Channel_Normal_Table VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	sqlQuery = "INSERT INTO Channel_Normal_Table VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	execPrepare(sqlQuery);
 	execQuery("BEGIN TRANSACTION");
 
@@ -158,13 +160,15 @@ Aux_Channel DOUBLE)";
 		sqlite3_bind_double(stmt, 7, it->stepTime);
 		sqlite3_bind_text(stmt, 8, it->localTime.c_str(), it->localTime.length(), SQLITE_TRANSIENT);
 		sqlite3_bind_double(stmt, 9, it->secSinceEpoch);
-		sqlite3_bind_double(stmt, 10, it->current);
-		sqlite3_bind_double(stmt, 11, it->voltage);
-		sqlite3_bind_double(stmt, 12, it->voltage2);
-		sqlite3_bind_double(stmt, 13, it->capacity);
-		sqlite3_bind_double(stmt, 14, it->energy);
-		sqlite3_bind_double(stmt, 15, it->dQdV);
-		sqlite3_bind_double(stmt, 16, it->auxiliary);
+		sqlite3_bind_double(stmt, 10, it->auxiliary);
+		sqlite3_bind_double(stmt, 11, it->current);
+		sqlite3_bind_double(stmt, 12, it->capacity);
+		sqlite3_bind_double(stmt, 13, it->voltage);
+		sqlite3_bind_double(stmt, 14, it->voltage2);
+		sqlite3_bind_double(stmt, 15, it->energy);
+		sqlite3_bind_double(stmt, 16, it->energy2);
+		sqlite3_bind_double(stmt, 17, it->dQdV);
+		sqlite3_bind_double(stmt, 18, it->dQdV2);
 
 		sqlite3_step(stmt); // Execute the SQL Statement
 		sqlite3_clear_bindings(stmt); // Clear bindings
