@@ -25,6 +25,7 @@ target_link_libraries (convpot m sqlite3 ${ODBC_LIB})
 
 # install
 install (TARGETS convpot RUNTIME DESTINATION bin)
-install (FILES odbc/odbcinst.ini DESTINATION /etc)
-install (FILES CONTRIBUTORS.md LICENSE README.md
-               CHANGELOG.md DESTINATION share/doc/convpot)
+install (FILES odbc/odbcinst.ini DESTINATION share/convpot)
+install (FILES CONTRIBUTORS.md README.md CHANGELOG.md 
+         DESTINATION share/doc/convpot)
+install (FILES LICENSE share/licenses/convpot)
