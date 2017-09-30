@@ -26,6 +26,6 @@ target_link_libraries (convpot m sqlite3 ${ODBC_LIB})
 # install
 install (TARGETS convpot RUNTIME DESTINATION bin)
 install (FILES odbc/odbcinst.ini DESTINATION share/convpot)
-install (FILES CONTRIBUTORS.md README.md CHANGELOG.md 
+install (FILES CONTRIBUTORS.md README.md CHANGELOG.md LICENSE
          DESTINATION share/doc/convpot)
-install (FILES LICENSE DESTINATION share/licenses/convpot)
+install (DIRECTORY test DESTINATION share/convpot/samples)
