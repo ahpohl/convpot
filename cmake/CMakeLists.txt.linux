@@ -20,7 +20,6 @@ include_directories (include)
 include (cmake/gitversion.cmake)
 
 # build and link
-link_directories (/usr/lib)
 add_executable (convpot ${SOURCES} ${VERSION_FILE})
 target_link_libraries (convpot m sqlite3 ${ODBC_LIB})
 
