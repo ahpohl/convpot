@@ -1,6 +1,6 @@
 # Convpot changelog
 
-## v1.1.2 - 2017-09-30
+## v1.1.4 - 2017-09-30
 * fix linux compilation
 * upload PKGBUILD to arch linux user repo
 
