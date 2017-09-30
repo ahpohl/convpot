@@ -28,4 +28,4 @@ install (TARGETS convpot RUNTIME DESTINATION bin)
 install (FILES odbc/odbcinst.ini DESTINATION share/convpot)
 install (FILES CONTRIBUTORS.md README.md CHANGELOG.md 
          DESTINATION share/doc/convpot)
-install (FILES LICENSE share/licenses/convpot)
+install (FILES LICENSE DESTINATION share/licenses/convpot)
