@@ -1,11 +1,14 @@
+# Maintainer: Alexander Pohl <alex@ahpohl.com>
 pkgname=convpot
 pkgver=v1.1.1
 pkgrel=1
+epoch=
 pkgdesc="Convert potentiostat data to a SQLite database"
 arch=('i686' 'x86_64')
 url="https://github.com/ahpohl/convpot"
 license=('MIT')
-depends=('mdbtools' 'sqlite3')
+groups=()
+depends=('unixodbc' 'sqlite3')
 makedepends=('cmake' 'git')
 checkdepends=()
 optdepends=()
@@ -17,19 +20,22 @@ options=()
 install=
 changelog=
 source=("git+https://github.com/ahpohl/convpot.git#tag=${pkgver}")
+noextract=()
 sha256sums=('SKIP')
+validpgpkeys=()
+
+prepare() {
+	cd "$pkgname"
+	cp cmake/CMakeLists.txt.linux CMakeLists.txt
+}
 
 build() {
-  cd "$srcdir/$pkgname"
-
-  cmake \
-	-DCMAKE_INSTALL_PREFIX="/usr" \
-	.
-
-  make -j $(nproc) all
+	cd "$pkgname"
+	cmake -DCMAKE_INSTALL_PREFIX=/usr .
+        make
 }
 
 package() {
-  cd "$srcdir/$pkgname"
-  make DESTDIR="${pkgdir}" install
+	cd "$pkgname" 
+	make DESTDIR="$pkgdir/" install
 }
