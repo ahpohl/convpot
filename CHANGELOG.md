@@ -1,8 +1,12 @@
 # Convpot changelog
 
-## v1.2.0 - 2017-09-02
+## v1.2.0 - upcoming
 * verbose option can be given multiple times
-* do full cell calculations for working and counter electrodes
+* do full cell calculations 
+
+## v1.1.7 - 2017-09-30
+* fix linux compilation
+* upload PKGBUILD to arch linux user repo
 
 ## v1.1.1 - 2017-08-27
 * add file name and creation date columns to Global_Table
