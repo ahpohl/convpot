@@ -188,6 +188,7 @@ void Sql::writeHalfCycleTable()
 	// create table
 	sqlQuery = "CREATE TABLE Half_Cycle_Table (\
 Half_Cycle INTEGER PRIMARY KEY,\
+Step_Index INTEGER,\
 Cycle_Start INTEGER,\
 Cycle_End INTEGER,\
 Step_time DOUBLE,\
@@ -199,21 +200,22 @@ Average_Voltage2 DOUBLE)";
 	execQuery(sqlQuery);
 
 	// bind records
-	sqlQuery = "INSERT INTO Half_Cycle_Table VALUES (?,?,?,?,?,?,?,?,?)";
+	sqlQuery = "INSERT INTO Half_Cycle_Table VALUES (?,?,?,?,?,?,?,?,?,?)";
 	execPrepare(sqlQuery);
 	execQuery("BEGIN TRANSACTION");
 
 	// insert values
 	for (vector<half_t>::const_iterator it = halfCycles.begin(); it != halfCycles.end(); ++it) {
 		sqlite3_bind_int(stmt, 1, it->halfCycle);
-		sqlite3_bind_int64(stmt, 2, it->begin);
-		sqlite3_bind_int64(stmt, 3, it->end);
-		sqlite3_bind_double(stmt, 4, it->stepTime);
-		sqlite3_bind_double(stmt, 5, it->capacity);
-		sqlite3_bind_double(stmt, 6, it->energy);
-		sqlite3_bind_double(stmt, 7, it->energy2);
-		sqlite3_bind_double(stmt, 8, it->averageVoltage);
-		sqlite3_bind_double(stmt, 9, it->averageVoltage2);
+		sqlite3_bind_int(stmt, 2, it->stepIndex);
+		sqlite3_bind_int64(stmt, 3, it->begin);
+		sqlite3_bind_int64(stmt, 4, it->end);
+		sqlite3_bind_double(stmt, 5, it->stepTime);
+		sqlite3_bind_double(stmt, 6, it->capacity);
+		sqlite3_bind_double(stmt, 7, it->energy);
+		sqlite3_bind_double(stmt, 8, it->energy2);
+		sqlite3_bind_double(stmt, 9, it->averageVoltage);
+		sqlite3_bind_double(stmt, 10, it->averageVoltage2);
 
 		sqlite3_step(stmt); // Execute the SQL Statement
 		sqlite3_clear_bindings(stmt); // Clear bindings

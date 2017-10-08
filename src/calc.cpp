@@ -104,6 +104,9 @@ void Device::calculateCycles()
 		// get half cycle index
 		halfCounter = distance(halfCycles.begin(), it);
 
+		// get step index
+		it->stepIndex = recs[it->end].stepIndex;
+
 		// reset capacity and energy on half cycle change
 		capacitySum = 0;
 		energySum = 0; energySum2 = 0;

@@ -56,6 +56,7 @@ struct rec_t {
 // half cycles
 struct half_t {
     int halfCycle;			// zero based half cycle index
+	int stepIndex;			// step index, 0: rest, 1: charge, -1 discharge
     size_t begin;			// data point, zero based cycle start
     size_t end;				// data point, zero based cycle end
     double stepTime;		// step time
