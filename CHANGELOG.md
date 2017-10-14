@@ -3,7 +3,8 @@
 ## v1.2.0 - upcoming
 * verbose option can be given multiple times
 * do full cell calculations
-* insert step index into half cycle table 
+* insert step index into half cycle table
+* calculate average current per cycle
 
 ## v1.1.7 - 2017-09-30
 * fix linux compilation

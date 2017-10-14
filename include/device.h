@@ -60,6 +60,7 @@ struct half_t {
     size_t begin;			// data point, zero based cycle start
     size_t end;				// data point, zero based cycle end
     double stepTime;		// step time
+	double averageCurrent;  // average current
     double capacity;		// capacity
     double energy;			// energy of working electrode
     double energy2;			// energy of counter electrode
@@ -74,6 +75,8 @@ struct full_t {
     size_t end;					// zero based cycle end
     double chargeTime;			// charge time
     double dischargeTime;		// discharge time
+	double chargeCurrent;		// charge current
+	double dischargeCurrent;	// discharge current
     double chargeCapacity;		// charge capacity
     double dischargeCapacity;	// discharge capacity
     double efficiency;			// coulombic efficiency

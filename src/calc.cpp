@@ -17,6 +17,7 @@ void Device::calculateCycles()
 	vector<double> capacityVector;
 	bool isFullCell = 0;
 	double sumVoltage2 = 0;
+	double currentSum = 0; int c = 0;
 	
 	// working electrode
 	double capacitySum = 0, energySum = 0, voltageSum = 0;
@@ -107,10 +108,11 @@ void Device::calculateCycles()
 		// get step index
 		it->stepIndex = recs[it->end].stepIndex;
 
-		// reset capacity and energy on half cycle change
+		// reset capacity, energy, voltage and current on half cycle change
 		capacitySum = 0;
 		energySum = 0; energySum2 = 0;
 		voltageSum = 0; voltageSum2 = 0;
+		currentSum = 0; c = 0;
 
 		// capacity, energy, dQdV
 		// integration with trapezoidal rule for non-uniform grid
@@ -120,6 +122,12 @@ void Device::calculateCycles()
 
 			// delta time
 			x = recs[k+1].stepTime - recs[k].stepTime;
+
+			// average current ignoring rest time
+			if (recs[k].current != 0) {
+				currentSum += recs[k].current;
+				c++;
+			}
 
 			// capacity, in As (coloumb C)
 			// prevent access to [b+1] on last point (array out of bounds)
@@ -211,6 +219,9 @@ void Device::calculateCycles()
 		it->energy2 = recs[(it->end)-1].energy2;
 		it->averageVoltage2 = voltageSum2 / recs[(it->end)-1].stepTime;
 
+		// average current
+		it->averageCurrent = currentSum / c;
+
 		// calculations for full cycles
 		// create new full cycle only on even half cycles
 		if ( (halfCounter % 2) == 0 ) {
@@ -226,6 +237,7 @@ void Device::calculateCycles()
 
 		if (it->capacity >= 0) {
 			fullCycles.back().chargeTime = it->stepTime;
+			fullCycles.back().chargeCurrent = it->averageCurrent;
 			fullCycles.back().chargeCapacity = it->capacity;
 			// working electrode
 			fullCycles.back().chargeEnergy = it->energy;
@@ -235,6 +247,7 @@ void Device::calculateCycles()
 			fullCycles.back().chargeVoltage2 = it->averageVoltage2;
 		} else {
 			fullCycles.back().dischargeTime = it->stepTime;
+			fullCycles.back().dischargeCurrent = it->averageCurrent;
 			fullCycles.back().dischargeCapacity = it->capacity;
 			// working electrode
 			fullCycles.back().dischargeEnergy = it->energy;

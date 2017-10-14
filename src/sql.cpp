@@ -192,6 +192,7 @@ Step_Index INTEGER,\
 Cycle_Start INTEGER,\
 Cycle_End INTEGER,\
 Step_time DOUBLE,\
+Average_Current DOUBLE,\
 Capacity DOUBLE,\
 Energy DOUBLE,\
 Energy2 DOUBLE,\
@@ -200,7 +201,7 @@ Average_Voltage2 DOUBLE)";
 	execQuery(sqlQuery);
 
 	// bind records
-	sqlQuery = "INSERT INTO Half_Cycle_Table VALUES (?,?,?,?,?,?,?,?,?,?)";
+	sqlQuery = "INSERT INTO Half_Cycle_Table VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 	execPrepare(sqlQuery);
 	execQuery("BEGIN TRANSACTION");
 
@@ -211,11 +212,12 @@ Average_Voltage2 DOUBLE)";
 		sqlite3_bind_int64(stmt, 3, it->begin);
 		sqlite3_bind_int64(stmt, 4, it->end);
 		sqlite3_bind_double(stmt, 5, it->stepTime);
-		sqlite3_bind_double(stmt, 6, it->capacity);
-		sqlite3_bind_double(stmt, 7, it->energy);
-		sqlite3_bind_double(stmt, 8, it->energy2);
-		sqlite3_bind_double(stmt, 9, it->averageVoltage);
-		sqlite3_bind_double(stmt, 10, it->averageVoltage2);
+		sqlite3_bind_double(stmt, 6, it->averageCurrent);
+		sqlite3_bind_double(stmt, 7, it->capacity);
+		sqlite3_bind_double(stmt, 8, it->energy);
+		sqlite3_bind_double(stmt, 9, it->energy2);
+		sqlite3_bind_double(stmt, 10, it->averageVoltage);
+		sqlite3_bind_double(stmt, 11, it->averageVoltage2);
 
 		sqlite3_step(stmt); // Execute the SQL Statement
 		sqlite3_clear_bindings(stmt); // Clear bindings
@@ -239,6 +241,8 @@ Cycle_Start INTEGER,\
 Cycle_End INTEGER,\
 Charge_Time DOUBLE,\
 Discharge_Time DOUBLE,\
+Charge_Current DOUBLE,\
+Discharge_Current DOUBLE,\
 Charge_Capacity DOUBLE,\
 Discharge_Capacity DOUBLE,\
 Efficiency DOUBLE,\
@@ -255,7 +259,7 @@ Hysteresis2 DOUBLE)";
 	execQuery(sqlQuery);
 
 	// bind records
-	sqlQuery = "INSERT INTO Full_Cycle_Table VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	sqlQuery = "INSERT INTO Full_Cycle_Table VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	execPrepare(sqlQuery);
 	execQuery("BEGIN TRANSACTION");
 
@@ -266,19 +270,21 @@ Hysteresis2 DOUBLE)";
 		sqlite3_bind_int64(stmt, 3, it->end);
 		sqlite3_bind_double(stmt, 4, it->chargeTime);
 		sqlite3_bind_double(stmt, 5, it->dischargeTime);
-		sqlite3_bind_double(stmt, 6, it->chargeCapacity);
-		sqlite3_bind_double(stmt, 7, it->dischargeCapacity);
-		sqlite3_bind_double(stmt, 8, it->efficiency);
-		sqlite3_bind_double(stmt, 9, it->chargeVoltage);
-		sqlite3_bind_double(stmt, 10, it->dischargeVoltage);
-		sqlite3_bind_double(stmt, 11, it->chargeVoltage2);
-		sqlite3_bind_double(stmt, 12, it->dischargeVoltage2);
-		sqlite3_bind_double(stmt, 13, it->chargeEnergy);
-		sqlite3_bind_double(stmt, 14, it->dischargeEnergy);
-		sqlite3_bind_double(stmt, 15, it->chargeEnergy2);
-		sqlite3_bind_double(stmt, 16, it->dischargeEnergy2);
-		sqlite3_bind_double(stmt, 17, it->hysteresis);
-		sqlite3_bind_double(stmt, 18, it->hysteresis2);
+		sqlite3_bind_double(stmt, 6, it->chargeCurrent);
+		sqlite3_bind_double(stmt, 7, it->dischargeCurrent);
+		sqlite3_bind_double(stmt, 8, it->chargeCapacity);
+		sqlite3_bind_double(stmt, 9, it->dischargeCapacity);
+		sqlite3_bind_double(stmt, 10, it->efficiency);
+		sqlite3_bind_double(stmt, 11, it->chargeVoltage);
+		sqlite3_bind_double(stmt, 12, it->dischargeVoltage);
+		sqlite3_bind_double(stmt, 13, it->chargeVoltage2);
+		sqlite3_bind_double(stmt, 14, it->dischargeVoltage2);
+		sqlite3_bind_double(stmt, 15, it->chargeEnergy);
+		sqlite3_bind_double(stmt, 16, it->dischargeEnergy);
+		sqlite3_bind_double(stmt, 17, it->chargeEnergy2);
+		sqlite3_bind_double(stmt, 18, it->dischargeEnergy2);
+		sqlite3_bind_double(stmt, 19, it->hysteresis);
+		sqlite3_bind_double(stmt, 20, it->hysteresis2);
 
 		sqlite3_step(stmt); // Execute the SQL Statement
 		sqlite3_clear_bindings(stmt); // Clear bindings
