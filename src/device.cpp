@@ -16,6 +16,7 @@ Device::Device(int argc, char** argv) : Setup(argc, argv)
 
     // run device methods
 	readDataFiles();
+	setGlobalDevice();
 	calculateCycles();
 
 	if (args.verbosity >= 3) {
@@ -52,6 +53,16 @@ void Device::printFileDetails()
 	if ( ! (file->comment).empty() ) {
 		cout << setw(10) << " " << "Comment: " << (file->comment) << endl;
 	}
+}
+
+// set device type for global table
+void Device::setGlobalDevice()
+{
+    if (details.size() > 1) {
+        args.globalDevice.assign("merged");
+    } else {
+        args.globalDevice.assign(details[0].device);
+    }
 }
 
 // process all data files

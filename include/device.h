@@ -105,6 +105,9 @@ class Device : public Setup
 		file_t* file;
 		std::vector<col_t> columns;
 
+		// setup
+		void setGlobalDevice();
+
 		// read
 		void readDataFiles();
 		void readDataPoints();

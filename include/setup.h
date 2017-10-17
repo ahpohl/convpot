@@ -39,6 +39,7 @@ struct global_t {
 	std::string outputFilename;		// -o option, output file name
     std::vector<std::string> fileNames;	// list of filenames
 	std::map<std::string, std::string> device;	// map of file ext and instrument desc
+	std::string globalDevice;       // device for global table
 	std::map<ReturnCodes, std::string> plots;	// map of experimental data types
     size_t fileSizeSum;		       	// total file size of all input files
     size_t recordsSum;       		// total data records

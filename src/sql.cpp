@@ -47,10 +47,11 @@ void Sql::writeGlobalTable()
 
 	// create table
 	sqlQuery = "CREATE TABLE Global_Table (\
-File_Name TEXT, \
-File_Size INTEGER, \
-DateTime INTEGER, \
-Data_Points INTEGER, \
+File_Name TEXT,\
+File_Size INTEGER,\
+DateTime INTEGER,\
+Data_Points INTEGER,\
+Device TEXT,\
 Mass DOUBLE,\
 Capacity DOUBLE,\
 Area DOUBLE,\
@@ -63,8 +64,9 @@ Version TEXT)";
 			args.outputFilename + "'," +
 			util::toString(args.fileSizeSum) + "," +
 			util::toString(time(0)) + "," +
-			util::toString(args.recordsSum) +
-			",0,0,0,0,'" + 
+			util::toString(args.recordsSum) + ",'" +
+			args.globalDevice +
+			"',0,0,0,0,'" + 
 			args.fullVersion + "')";
 	execQuery(sqlQuery);
 }

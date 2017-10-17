@@ -5,6 +5,7 @@
 * do full cell calculations
 * insert step index into half cycle table
 * calculate average current per cycle
+* add devive column to global table
 
 ## v1.1.7 - 2017-09-30
 * fix linux compilation
