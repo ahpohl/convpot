@@ -56,6 +56,7 @@ Mass DOUBLE,\
 Capacity DOUBLE,\
 Area DOUBLE,\
 Volume DOUBLE,\
+Loading DOUBLE,\
 Version TEXT)";
 	execQuery(sqlQuery);
 
@@ -66,7 +67,7 @@ Version TEXT)";
 			util::toString(time(0)) + "," +
 			util::toString(args.recordsSum) + ",'" +
 			args.globalDevice +
-			"',0,0,0,0,'" + 
+			"',0,0,0,0,0,'" + 
 			args.fullVersion + "')";
 	execQuery(sqlQuery);
 }
