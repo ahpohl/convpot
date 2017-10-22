@@ -1,6 +1,6 @@
 # Convpot changelog
 
-## v1.2.0 - upcoming
+## v1.2.0 - 2017-10-22
 * verbose option can be given multiple times
 * do full cell calculations
 * insert step index into half cycle table
