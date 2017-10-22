@@ -13,12 +13,27 @@ void Device::calculateCycles()
 	size_t halfCounter = 0;
 	double startTime = 0;
 	int previous = 0, current = 0;
-	double sum1 = 0, sum2 = 0, sum3 = 0, x = 0;
-	double func1 = 0, func2 = 0, func3 = 0;
-	vector<double> voltageVector, capacityVector;
+	double x = 0;
+	vector<double> capacityVector;
+	bool isFullCell = 0;
+	double sumVoltage2 = 0;
+	double currentSum = 0; int c = 0;
+	
+	// working electrode
+	double capacitySum = 0, energySum = 0, voltageSum = 0;
+	double capacityFunc = 0, energyFunc = 0, voltageFunc = 0;
+	vector<double> voltageVector;
+	
+	// counter electrode
+	double capacitySum2 = 0, energySum2 = 0, voltageSum2 = 0;
+	double capacityFunc2 = 0, energyFunc2 = 0, voltageFunc2 = 0;
+	vector<double> voltageVector2;
 
 	// calculations for data points
 	for (size_t i = 0; i < recs.size(); ++i) {
+		
+		// check if full cell (sum voltage2 should be greater than zero)
+		sumVoltage2 += recs[i].voltage2;
 
 		// get current step index, ignore OCV points
 		if (recs[i].stepIndex) {
@@ -67,6 +82,9 @@ void Device::calculateCycles()
 		// save step
 		previous = current;
 	}
+	
+	// test if full cell
+	isFullCell = (sumVoltage2 > 0) ? 1 : 0;
 
 	// end of last half cycle
 	if ( ! halfCycles.empty() ) {
@@ -87,10 +105,14 @@ void Device::calculateCycles()
 		// get half cycle index
 		halfCounter = distance(halfCycles.begin(), it);
 
-		// reset capacity and energy on half cycle change
-		sum1 = 0;
-		sum2 = 0;
-		sum3 = 0;
+		// get step index
+		it->stepIndex = recs[it->end].stepIndex;
+
+		// reset capacity, energy, voltage and current on half cycle change
+		capacitySum = 0;
+		energySum = 0; energySum2 = 0;
+		voltageSum = 0; voltageSum2 = 0;
+		currentSum = 0; c = 0;
 
 		// capacity, energy, dQdV
 		// integration with trapezoidal rule for non-uniform grid
@@ -101,21 +123,37 @@ void Device::calculateCycles()
 			// delta time
 			x = recs[k+1].stepTime - recs[k].stepTime;
 
+			// average current ignoring rest time
+			if (recs[k].current != 0) {
+				currentSum += recs[k].current;
+				c++;
+			}
+
 			// capacity, in As (coloumb C)
 			// prevent access to [b+1] on last point (array out of bounds)
-			func1 = recs[k+1].current + recs[k].current;
-			sum1 += (0.5 * x * func1);
-			recs[k].capacity = sum1;
+			capacityFunc = recs[k+1].current + recs[k].current;
+			capacitySum += (0.5 * x * capacityFunc);
+			recs[k].capacity = capacitySum;
 
-			// energy, in VAs (Ws)
-			func2 = (recs[k+1].voltage * recs[k+1].current) +
+			// energy, in VAs (Ws), working electrode
+			energyFunc = (recs[k+1].voltage * recs[k+1].current) +
 					(recs[k+1].voltage * recs[k].current);
-			sum2 += (0.5 * x * func2);
-			recs[k].energy = sum2;
-
-			// average voltage, in V
-			func3 = recs[k+1].voltage + recs[k].voltage;
-			sum3 += (0.5 * x * func3);
+			energySum += (0.5 * x * energyFunc);
+			recs[k].energy = energySum;
+			
+			// energy, in VAs (Ws), counter electrode
+			energyFunc2 = (recs[k+1].voltage2 * recs[k+1].current) +
+					(recs[k+1].voltage2 * recs[k].current);
+			energySum2 += (0.5 * x * energyFunc2);
+			recs[k].energy2 = energySum2;
+			
+			// average voltage, in V, working electrode
+			voltageFunc = recs[k+1].voltage + recs[k].voltage;
+			voltageSum += (0.5 * x * voltageFunc);
+			
+			// average voltage, in V, counter electrode
+			voltageFunc2 = recs[k+1].voltage2 + recs[k].voltage2;
+			voltageSum2 += (0.5 * x * voltageFunc2);
 		}
 
 		// smooth capacity and current for each half cycle
@@ -127,22 +165,32 @@ void Device::calculateCycles()
 			size_t i = 0;
 
 			for (size_t k = it->begin; k < (it->end); ++k) {
-				voltageVector.push_back(recs[k].voltage);
 				capacityVector.push_back(recs[k].capacity);
+				// working electrode
+				voltageVector.push_back(recs[k].voltage);
+				// counter electrode
+				voltageVector2.push_back(recs[k].voltage2);
 			}
 
-			// smooth voltage and current
-			box.filter(voltageVector);
+			// smooth current
 			box.filter(capacityVector);
+			// smooth working electrode voltage
+			box.filter(voltageVector);
+			// smooth counter electrode voltage
+			box.filter(voltageVector2);;
 
 			for (size_t k = it->begin; k < (it->end); ++k, ++i) {
-				recs[k].voltage = voltageVector[i];
 				recs[k].capacity = capacityVector[i];
+				// working electrode
+				recs[k].voltage = voltageVector[i];
+				// counter electrode
+				recs[k].voltage2 = voltageVector2[i];
 			}
 
 			// reset vectors
-			voltageVector.clear();
 			capacityVector.clear();
+			voltageVector.clear();
+			voltageVector2.clear();
 			i = 0;
 		}
 
@@ -152,14 +200,27 @@ void Device::calculateCycles()
 		// stop two points before last data point because capacity
 		// of last point is zero
 		for (size_t k = it->begin; k < (it->end-1); ++k) {
+			// working electrode
 			recs[k].dQdV = ((recs[k+1].capacity - recs[k].capacity) /
 				(recs[k+1].voltage - recs[k].voltage));
+			// counter electrode
+			recs[k].dQdV2 = (isFullCell == 1) ? ((recs[k+1].capacity - recs[k].capacity) /
+				(recs[k+1].voltage2 - recs[k].voltage2)) : 0;
 		}
 
 		// save half cycle, take value before last data point
 		it->capacity = recs[(it->end)-1].capacity;
+		
+		// working electrode
 		it->energy = recs[(it->end)-1].energy;
-		it->averageVoltage = sum3 / recs[(it->end)-1].stepTime;
+		it->averageVoltage = voltageSum / recs[(it->end)-1].stepTime;
+		
+		// counter electrode
+		it->energy2 = recs[(it->end)-1].energy2;
+		it->averageVoltage2 = voltageSum2 / recs[(it->end)-1].stepTime;
+
+		// average current
+		it->averageCurrent = currentSum / c;
 
 		// calculations for full cycles
 		// create new full cycle only on even half cycles
@@ -176,14 +237,24 @@ void Device::calculateCycles()
 
 		if (it->capacity >= 0) {
 			fullCycles.back().chargeTime = it->stepTime;
+			fullCycles.back().chargeCurrent = it->averageCurrent;
 			fullCycles.back().chargeCapacity = it->capacity;
+			// working electrode
 			fullCycles.back().chargeEnergy = it->energy;
 			fullCycles.back().chargeVoltage = it->averageVoltage;
+			// counter electrode
+			fullCycles.back().chargeEnergy2 = it->energy2;
+			fullCycles.back().chargeVoltage2 = it->averageVoltage2;
 		} else {
 			fullCycles.back().dischargeTime = it->stepTime;
+			fullCycles.back().dischargeCurrent = it->averageCurrent;
 			fullCycles.back().dischargeCapacity = it->capacity;
+			// working electrode
 			fullCycles.back().dischargeEnergy = it->energy;
 			fullCycles.back().dischargeVoltage = it->averageVoltage;
+			// counter electrode
+			fullCycles.back().dischargeEnergy2 = it->energy2;
+			fullCycles.back().dischargeVoltage2 = it->averageVoltage2;
 		}
 	}
 
@@ -195,6 +266,7 @@ void Device::calculateCycles()
 
 		// voltage hysteresis, in V
 		it->hysteresis = (it->chargeVoltage) - (it->dischargeVoltage);
+		it->hysteresis2 = (it->chargeVoltage2) - (it->dischargeVoltage2);
 
 		// coulombic efficiency
 		it->efficiency = fabs(it->dischargeCapacity) / (it->chargeCapacity);

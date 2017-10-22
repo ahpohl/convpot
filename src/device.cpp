@@ -16,11 +16,16 @@ Device::Device(int argc, char** argv) : Setup(argc, argv)
 
     // run device methods
 	readDataFiles();
+	setGlobalDevice();
 	calculateCycles();
 
-	if (args.isVerbose) {
-		printDataPoints();
+	if (args.verbosity >= 3) {
 		printCalcRecords();
+	}
+	if (args.verbosity >= 2) {
+		printDataPoints();
+	}
+	if (args.verbosity >= 1) {
 		printHalfCycles();
 	}
 	printFullCycles();
@@ -48,6 +53,16 @@ void Device::printFileDetails()
 	if ( ! (file->comment).empty() ) {
 		cout << setw(10) << " " << "Comment: " << (file->comment) << endl;
 	}
+}
+
+// set device type for global table
+void Device::setGlobalDevice()
+{
+    if (details.size() > 1) {
+        args.globalDevice.assign("merged");
+    } else {
+        args.globalDevice.assign(details[0].device);
+    }
 }
 
 // process all data files
@@ -201,7 +216,7 @@ void Device::readDataPoints()
 					// voltage, working electrode
 					record->voltage = util::stringTo<double> (tokens[i]);
 				} else if (signedint == columns[3].index) {
-					// voltage, reference electrode
+					// voltage, counter electrode
 					record->voltage2 = util::stringTo<double> (tokens[i]);
 				} else if (signedint == columns[4].index) {
 					// auxiliary channel (temperature)
@@ -283,25 +298,29 @@ void Device::printCalcRecords()
 +----------------------------+\n\
 " << endl;
 
-    	cout << setw(14) << "Data Point" <<
-	    		setw(14) << "Step" <<
-				setw(14) << "Half" <<
-	    		setw(14) << "Full" <<
+    	cout << setw(14) << "Point" <<
+	    		setw(8) << "Step" <<
+				setw(8) << "Half" <<
+	    		setw(8) << "Full" <<
 				setw(14) << "Step Time" <<
 				setw(14) << "Capacity" <<
 				setw(14) << "Energy" <<
+				setw(14) << "Energy2" <<
 				setw(14) << "dQdV" <<
+				setw(14) << "dQdV2" <<
 				endl;
 
     for (vector<rec_t>::const_iterator it = recs.begin(); it != recs.end(); ++it) {
 		cout << setw(14) << it->dataPoint <<
-				setw(14) << it->stepIndex <<
-				setw(14) << it->halfCycle <<
-				setw(14) << it->fullCycle <<
+				setw(8) << it->stepIndex <<
+				setw(8) << it->halfCycle <<
+				setw(8) << it->fullCycle <<
 				setw(14) << fixed << setprecision(1) << it->stepTime <<
 				setw(14) << scientific << setprecision(4) << it->capacity <<
 				setw(14) << scientific << setprecision(4) << it->energy <<
+				setw(14) << scientific << setprecision(4) << it->energy2 <<
 				setw(14) << scientific << setprecision(4) << it->dQdV <<
+				setw(14) << scientific << setprecision(4) << it->dQdV2 <<
 				endl;
 	}
 }
@@ -340,23 +359,20 @@ void Device::printFullCycles()
     cout << setw(14) << "Full" <<
 			setw(14) << "Begin" <<
 			setw(14) << "End" <<
-			setw(28) << "Capacity" <<
-    		setw(28) << "Energy" <<
-			setw(14) << "Hysteresis" <<
-			setw(14) << "Efficiency" <<
+			setw(28) << "WE energy [Ws]" <<
+			setw(28) << "CE energy [Ws]" <<
 			endl;
 
     for (vector<full_t>::const_iterator it = fullCycles.begin(); it != fullCycles.end(); ++it) {
 		cout << setw(14) << it->fullCycle <<
 				setw(14) << it->begin <<
 				setw(14) << it->end <<
-				setw(14) << scientific << setprecision(4) << it->chargeCapacity <<
-				setw(14) << scientific << setprecision(4) << it->dischargeCapacity <<
 				setw(14) << scientific << setprecision(4) << it->chargeEnergy <<
 				setw(14) << scientific << setprecision(4) << it->dischargeEnergy <<
-				setw(14) << fixed << setprecision(4) << it->hysteresis <<
-				setw(14) << fixed << setprecision(4) << it->efficiency <<
+				setw(14) << scientific << setprecision(4) << it->chargeEnergy2 <<
+				setw(14) << scientific << setprecision(4) << it->dischargeEnergy2 <<
 				endl;
+				
 	}
 
     cout << endl;

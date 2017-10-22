@@ -149,8 +149,8 @@ void Setup::parseCmdLine()
         { "info", no_argument, NULL, 'i' },
         { "output", required_argument, NULL, 'o' },
         { "merge", required_argument, NULL, 'm' },
-	{ "timer", no_argument, NULL, 't' },
-	{ "smooth", required_argument, NULL, 's'},
+        { "timer", no_argument, NULL, 't' },
+        { "smooth", required_argument, NULL, 's'},
         { NULL, 0, NULL, 0 }
     };
 
@@ -171,7 +171,7 @@ void Setup::parseCmdLine()
 			break;
 
 		case 'v':
-			args.isVerbose = true;
+			args.verbosity++;
 			break;
 
 		case 'i':

@@ -1,11 +1,18 @@
 # Convpot changelog
 
+## v1.2.0 - upcoming
+* verbose option can be given multiple times
+* do full cell calculations
+* insert step index into half cycle table
+* calculate average current per cycle
+* add device and loading columns to global table
+
 ## v1.1.7 - 2017-09-30
 * fix linux compilation
 * upload PKGBUILD to arch linux user repo
 
 ## v1.1.1 - 2017-08-27
-* add file name and creation date columns to Global_Table
+* add file name and creation date columns to global table
 * fix typo in short option argument (-m)
 
 ## v1.1.0 - 2017-08-09

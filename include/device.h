@@ -38,13 +38,15 @@ struct rec_t {
     std::string localTime;	// local time string
     time_t secSinceEpoch;	// data point, sec since epoch
     double current;			// current
-    double voltage;			// potential of working electrode
-    double voltage2;		// potential of counter electrode
     double capacity;		// capacity
-    double energy;			// energy
-    double dQdV;			// dQdV
     double auxiliary;		// auxiliary channel, e.g. temperature
-
+    double voltage;			// potential of working electrode (WE)
+    double voltage2;		// potential of counter electrode (CE)
+    double energy;			// energy WE
+    double energy2;			// energy CE
+    double dQdV;			// dQdV WE
+    double dQdV2;			// dQdV CE
+    
     // overload less functor for sort
     bool operator < (const rec_t& a) const {
     	return dataPoint < a.dataPoint;
@@ -54,12 +56,16 @@ struct rec_t {
 // half cycles
 struct half_t {
     int halfCycle;			// zero based half cycle index
+	int stepIndex;			// step index, 0: rest, 1: charge, -1 discharge
     size_t begin;			// data point, zero based cycle start
     size_t end;				// data point, zero based cycle end
     double stepTime;		// step time
+	double averageCurrent;  // average current
     double capacity;		// capacity
-    double energy;			// energy
-    double averageVoltage;	// average voltage
+    double energy;			// energy of working electrode
+    double energy2;			// energy of counter electrode
+    double averageVoltage;	// average voltage of working electrode
+    double averageVoltage2;	// average voltage of counter electrode
 };
 
 // full cycles
@@ -69,14 +75,21 @@ struct full_t {
     size_t end;					// zero based cycle end
     double chargeTime;			// charge time
     double dischargeTime;		// discharge time
+	double chargeCurrent;		// charge current
+	double dischargeCurrent;	// discharge current
     double chargeCapacity;		// charge capacity
     double dischargeCapacity;	// discharge capacity
-    double chargeEnergy;		// charge energy
-    double dischargeEnergy;		// discharge energy
-    double chargeVoltage;		// average charge voltage
-    double dischargeVoltage;	// average discharge voltage 
-    double hysteresis;			// voltage hysteresis
     double efficiency;			// coulombic efficiency
+    double chargeVoltage;		// average charge voltage WE
+    double dischargeVoltage;	// average discharge voltage WE
+    double chargeVoltage2;		// average charge voltage CE
+    double dischargeVoltage2;	// average discharge voltage CE
+    double chargeEnergy;		// charge energy WE
+    double dischargeEnergy;		// discharge energy WE
+    double chargeEnergy2;		// charge energy CE
+    double dischargeEnergy2;	// discharge energy CE
+    double hysteresis;			// voltage hysteresis WE
+    double hysteresis2;			// voltage hysteresis CE
 };
 
 struct col_t {
@@ -91,6 +104,9 @@ class Device : public Setup
 		std::ifstream* reader;
 		file_t* file;
 		std::vector<col_t> columns;
+
+		// setup
+		void setGlobalDevice();
 
 		// read
 		void readDataFiles();
