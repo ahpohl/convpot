@@ -17,7 +17,7 @@ void Device::calculateCycles()
 	vector<double> capacityVector;
 	bool isFullCell = 0;
 	double sumVoltage2 = 0;
-	double currentSum = 0; int c = 0;
+	double currentSum = 0; int c = 1;
 	
 	// working electrode
 	double capacitySum = 0, energySum = 0, voltageSum = 0;
@@ -105,14 +105,34 @@ void Device::calculateCycles()
 		// get half cycle index
 		halfCounter = distance(halfCycles.begin(), it);
 
-		// get step index
-		it->stepIndex = recs[it->end].stepIndex;
-
 		// reset capacity, energy, voltage and current on half cycle change
 		capacitySum = 0;
 		energySum = 0; energySum2 = 0;
 		voltageSum = 0; voltageSum2 = 0;
 		currentSum = 0; c = 0;
+
+		// calculate average current ignoring rest time
+		// loop over all data points
+		for (size_t k = it->begin; k == (it->end); ++k) {
+            if (recs[k].stepIndex != 0) {
+                currentSum += recs[k].current;
+                c++;
+            }
+		}
+
+		// calculate average current
+        it->averageCurrent = (c > 0) ? (currentSum / c) : 0;
+		
+        // get step index from average current
+		// do not use step index of last data point of half cycle
+		// as it could be zero 
+        if (it->averageCurrent > 1e-15) {
+            it->stepIndex = 1;
+        } else if (it->averageCurrent < -1e-15) {
+            it->stepIndex = -1;
+        } else {
+            it->stepIndex = 0;
+        }
 
 		// capacity, energy, dQdV
 		// integration with trapezoidal rule for non-uniform grid
@@ -122,12 +142,6 @@ void Device::calculateCycles()
 
 			// delta time
 			x = recs[k+1].stepTime - recs[k].stepTime;
-
-			// average current ignoring rest time
-			if (recs[k].current != 0) {
-				currentSum += recs[k].current;
-				c++;
-			}
 
 			// capacity, in As (coloumb C)
 			// prevent access to [b+1] on last point (array out of bounds)
@@ -198,15 +212,18 @@ void Device::calculateCycles()
 		// separate loop because we have to calculate capacity[k+1]
 		// which is not known in first loop over data points
 		// stop two points before last data point because capacity
-		// of last point is zero. Check for rest time and only calculate 
+		// of last point is zero. Check for nan and only calculate 
 		// counter electorde if full cell
 		for (size_t k = it->begin; k < (it->end-1); ++k) {
 			// working electrode
-			recs[k].dQdV = (recs[k].stepIndex != 0) ? ((recs[k+1].capacity - recs[k].capacity) / 
-				(recs[k+1].voltage - recs[k].voltage)) : 0;
+			recs[k].dQdV = ((recs[k+1].capacity - recs[k].capacity) / 
+				(recs[k+1].voltage - recs[k].voltage));
+			if (isnan(recs[k].dQdV)) { recs[k].dQdV = 0; }
+ 
 			// counter electrode
-			recs[k].dQdV2 = ((recs[k].stepIndex != 0) && (isFullCell > 0)) ? 
-				((recs[k+1].capacity - recs[k].capacity) / (recs[k+1].voltage2 - recs[k].voltage2)) : 0;
+			recs[k].dQdV2 = (isFullCell > 0) ? ((recs[k+1].capacity - recs[k].capacity) / 
+				(recs[k+1].voltage2 - recs[k].voltage2)) : 0;
+			if (isnan(recs[k].dQdV2)) { recs[k].dQdV2 = 0; }
 		}
 
 		// save half cycle, take value before last data point
@@ -219,9 +236,6 @@ void Device::calculateCycles()
 		// counter electrode
 		it->energy2 = recs[(it->end)-1].energy2;
 		it->averageVoltage2 = voltageSum2 / recs[(it->end)-1].stepTime;
-
-		// average current
-		it->averageCurrent = currentSum / c;
 
 		// calculations for full cycles
 		// create new full cycle only on even half cycles
