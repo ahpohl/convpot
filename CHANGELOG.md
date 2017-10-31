@@ -1,5 +1,8 @@
 # Convpot changelog
 
+## v1.2.1 - 2017-10-31
+* fix dQ/dV division by zero for rest points 
+
 ## v1.2.0 - 2017-10-22
 * verbose option can be given multiple times
 * do full cell calculations

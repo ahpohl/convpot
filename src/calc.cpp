@@ -198,14 +198,15 @@ void Device::calculateCycles()
 		// separate loop because we have to calculate capacity[k+1]
 		// which is not known in first loop over data points
 		// stop two points before last data point because capacity
-		// of last point is zero
+		// of last point is zero. Check for rest time and only calculate 
+		// counter electorde if full cell
 		for (size_t k = it->begin; k < (it->end-1); ++k) {
 			// working electrode
-			recs[k].dQdV = ((recs[k+1].capacity - recs[k].capacity) /
-				(recs[k+1].voltage - recs[k].voltage));
+			recs[k].dQdV = (recs[k].stepIndex != 0) ? ((recs[k+1].capacity - recs[k].capacity) / 
+				(recs[k+1].voltage - recs[k].voltage)) : 0;
 			// counter electrode
-			recs[k].dQdV2 = (isFullCell == 1) ? ((recs[k+1].capacity - recs[k].capacity) /
-				(recs[k+1].voltage2 - recs[k].voltage2)) : 0;
+			recs[k].dQdV2 = ((recs[k].stepIndex != 0) && (isFullCell > 0)) ? 
+				((recs[k+1].capacity - recs[k].capacity) / (recs[k+1].voltage2 - recs[k].voltage2)) : 0;
 		}
 
 		// save half cycle, take value before last data point
