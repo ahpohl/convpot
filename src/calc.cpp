@@ -17,7 +17,7 @@ void Device::calculateCycles()
 	vector<double> capacityVector;
 	bool isFullCell = 0;
 	double sumVoltage2 = 0;
-	double currentSum = 0; int c = 1;
+	double currentSum = 0; int c = 0;
 	
 	// working electrode
 	double capacitySum = 0, energySum = 0, voltageSum = 0;
@@ -32,9 +32,6 @@ void Device::calculateCycles()
 	// calculations for data points
 	for (size_t i = 0; i < recs.size(); ++i) {
 		
-		// check if full cell (sum voltage2 should be greater than zero)
-		sumVoltage2 += recs[i].voltage2;
-
 		// get current step index, ignore OCV points
 		if (recs[i].stepIndex) {
 			current = recs[i].stepIndex;
@@ -62,8 +59,8 @@ void Device::calculateCycles()
 			// begin data point, always begin from zero
 			half->begin = (halfCounter == 0) ? 0 : i;
 
-			// half cycle index
-			half->halfCycle = halfCounter++;
+            // half cycle index
+            half->halfCycle = halfCounter++;
 
 			// save
 			halfCycles.push_back(*half);
@@ -79,11 +76,14 @@ void Device::calculateCycles()
 		// full cycle index
 		recs[i].fullCycle = (halfCounter == 0) ? (halfCounter / 2) : ((halfCounter - 1) / 2);
 
+       	// voltage2
+        sumVoltage2 += recs[i].voltage2;
+
 		// save step
 		previous = current;
 	}
 	
-	// test if full cell
+	// test if full cell (sum voltage2 greater than zero)
 	isFullCell = (sumVoltage2 > 0) ? 1 : 0;
 
 	// end of last half cycle
@@ -104,35 +104,34 @@ void Device::calculateCycles()
 
 		// get half cycle index
 		halfCounter = distance(halfCycles.begin(), it);
-
-		// reset capacity, energy, voltage and current on half cycle change
-		capacitySum = 0;
-		energySum = 0; energySum2 = 0;
-		voltageSum = 0; voltageSum2 = 0;
+		
+		// reset
 		currentSum = 0; c = 0;
 
-		// calculate average current ignoring rest time
-		// loop over all data points
-		for (size_t k = it->begin; k == (it->end); ++k) {
-            if (recs[k].stepIndex != 0) {
-                currentSum += recs[k].current;
-                c++;
-            }
+		// loop over all data points in half cycle
+        for (size_t k = it->begin; k <= (it->end); ++k) {
+			if (recs[k].stepIndex) {
+            	currentSum += recs[k].current;
+            	c++;
+			}
 		}
 
-		// calculate average current
-        it->averageCurrent = (c > 0) ? (currentSum / c) : 0;
-		
-        // get step index from average current
-		// do not use step index of last data point of half cycle
-		// as it could be zero 
+		// avergage current
+		it->averageCurrent = (c > 0) ? (currentSum / c) : 0;
+
+		// get step index from average current
         if (it->averageCurrent > 1e-15) {
             it->stepIndex = 1;
         } else if (it->averageCurrent < -1e-15) {
             it->stepIndex = -1;
         } else {
             it->stepIndex = 0;
-        }
+		}
+
+		// reset capacity, energy, voltage and current on half cycle change
+		capacitySum = 0;
+		energySum = 0; energySum2 = 0;
+		voltageSum = 0; voltageSum2 = 0;
 
 		// capacity, energy, dQdV
 		// integration with trapezoidal rule for non-uniform grid

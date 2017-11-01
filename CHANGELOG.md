@@ -1,6 +1,6 @@
 # Convpot changelog
 
-## v1.2.1 - 2017-10-31
+## v1.2.1 - 2017-11-01
 * test dQ/dV for "not a number"
 * calculate average current over all data points
 * use average current for half cycle step index
