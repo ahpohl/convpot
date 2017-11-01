@@ -17,7 +17,7 @@ Convpot is a converter program written in C++ which converts raw data from poten
 Follow these instructions (for Windows):
 
 1. Download the latest [convpot installer](https://github.com/ahpohl/convpot/releases/latest) from GitHub.
-1. Run the installer ``convpot-x.y.z-win32.exe`` and choose the option to add Convpot to the PATH variable for the current user or system-wide.
+1. Run the installer ``convpot-x.y.z-win32.exe`` and choose the option to add Convpot to the PATH variable for the current user (non-admin install) or system-wide (admin install).
 1. Navigate to the Convpot menu entry and click on ``Run Convpot``.
 1. A Cmd window opens. You can now run one of the examples:
 ```
