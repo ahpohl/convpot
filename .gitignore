@@ -1,5 +1,8 @@
 *~
 CMakeLists.txt
 test/*.sqlite
+test/*.zip
+test/*.png
+test/*.csv
 odbc/*.dll
 build/*
