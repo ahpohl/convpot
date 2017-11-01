@@ -1,9 +1,10 @@
 # Convpot changelog
 
-## v1.2.1 - 2017-11-01
+## v1.2.1 - upcoming
 * test dQ/dV for "not a number"
 * calculate average current over all data points
 * use average current for half cycle step index
+* windows installation possible as non-admin user
 
 ## v1.2.0 - 2017-10-22
 * verbose option can be given multiple times
