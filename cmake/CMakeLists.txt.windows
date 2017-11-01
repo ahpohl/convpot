@@ -65,4 +65,5 @@ set (CPACK_NSIS_MENU_LINKS "convpot.bat" "Run Convpot"
                            "examples" "Examples"
                            "${CPACK_NSIS_HELP_LINK}" "GitHub page")
 set (CPACK_NSIS_MODIFY_PATH ON)
+set(CPACK_NSIS_DEFINES "RequestExecutionLevel user")
 include (CPack)
