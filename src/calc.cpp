@@ -284,5 +284,6 @@ void Device::calculateCycles()
 
 		// coulombic efficiency
 		it->efficiency = fabs(it->dischargeCapacity) / (it->chargeCapacity);
+		if (isnan(it->efficiency)) { it->efficiency = 0; }
 	}
 }
