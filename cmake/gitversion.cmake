@@ -9,7 +9,6 @@ string (REGEX REPLACE "^v[0-9]+\\.[0-9]+\\.([0-9]+).*" "\\1" CPACK_PACKAGE_VERSI
 set (GIT_VERSION_SHORT "v${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
 
 # set files and folders
-set (RESOURCE_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/resources")
 set (VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/version.cpp") 
 
 # configure version.cpp

@@ -17,6 +17,7 @@ set (ODBC_LIB odbc)
 include_directories (include)
 
 # build and include version.cpp from git tag
+set (RESOURCE_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/resources")
 include (cmake/gitversion.cmake)
 
 # build and link
