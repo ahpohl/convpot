@@ -6,3 +6,8 @@ test/*.png
 test/*.csv
 odbc/*.dll
 build/*
+version.cpp
+cmake_install.cmake
+Makefile
+CMakeFiles/
+CMakeCache.txt
