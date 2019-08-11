@@ -1,4 +1,4 @@
-#include "util.h"
+#include "util.hpp"
 
 // split string into tokens at delimiters
 void util::tokenize(const std::string& str,
@@ -52,40 +52,21 @@ void util::boxFIR::filter(std::vector<double> &a)
 		order--;
 	}
 
-	/*
-	// forward
-    for (unsigned int nn = 0; nn < a.size(); ++nn) {
-
-    	// apply smoothing filter to signal
-        output = 0;
-        m[0] = a[nn];
-
-        for (int ii = 0; ii < numCoeffs; ++ii) {
-        	output += b[ii] * m[ii];
-        }
-
-        // re-shuffle memories
-        for (int ii = numCoeffs - 1; ii != 0; --ii) {
-        	m[ii] = m[ii-1];
-        }
-        a[nn] = output;
-    }
-    */
-
 	// reverse (no phase distortion)
-    for (int i = a.size(); i > 0; --i) {
+  for (int i = a.size(); i > 0; --i) {
+    // Apply smoothing filter to signal
+    output = 0;
+    m[m.size() - 1] = a[i - 1];
 
-        // Apply smoothing filter to signal
-        output = 0;
-        m[m.size() - 1] = a[i - 1];
+    for (int j = numCoeffs; j > 0; --j) {
+      output += b[j - 1] * m[j - 1];
+    }
 
-        for (int j = numCoeffs; j > 0; --j)
-            output += b[j - 1] * m[j - 1];
+    // Reshuffle memories
+    for (int j = 0; j != numCoeffs; ++j) {
+      m[j] = m[j + 1];
+    }
 
-        // Reshuffle memories
-        for (int j = 0; j != numCoeffs; ++j)
-            m[j] = m[j + 1];
-
-        a[i - 1] = output;
+    a[i - 1] = output;
 	}
 }

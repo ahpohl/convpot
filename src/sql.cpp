@@ -1,9 +1,10 @@
-#include "main.h"
-#include "util.h"
-#include "msql.h"
-
 #include <iostream>
 #include <ctime>
+
+#include "main.h"
+#include "util.hpp"
+#include "msql.hpp"
+
 using namespace std;
 
 // sql constructor

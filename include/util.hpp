@@ -1,15 +1,14 @@
-#ifndef UTIL_H
-#define UTIL_H
+#ifndef UTIL_HPP
+#define UTIL_HPP
 
 #include <string>
 #include <vector>
 #include <sstream>
 
 namespace util {
-
-	void tokenize(const std::string& str,
-		std::vector<std::string>& tokens,
-		const std::string& delimiters);
+  void tokenize(const std::string& str,
+	std::vector<std::string>& tokens,
+	const std::string& delimiters);
 
 	template<typename T>
 	inline T stringTo( const std::string& s )
@@ -28,16 +27,15 @@ namespace util {
 		return o.str();
 	};
 
-	class boxFIR
-	{
+class boxFIR {
+private:
+  int numCoeffs; // MUST be > 0
 
-	private:
-	    int numCoeffs; // MUST be > 0
+public:
+  boxFIR(int _numCoeffs);
+  void filter(std::vector<double> &a);
+};
 
-	public:
-	    boxFIR(int _numCoeffs);
-	    void filter(std::vector<double> &a);
-	};
 }
 
-#endif // UTIL_H
+#endif // UTIL_HPP

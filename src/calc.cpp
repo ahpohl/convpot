@@ -1,8 +1,9 @@
-#include "device.h"
-#include "util.h"
-
 #include <iostream>
 #include <cmath>
+
+#include "device.hpp"
+#include "util.hpp"
+
 using namespace std;
 
 // do calculations for each data point, half and full cycles

@@ -1,9 +1,10 @@
-#include "main.h"
-#include "device.h"
-#include "math.h"
-
 #include <iostream>
 #include <algorithm>
+
+#include "main.h"
+#include "device.hpp"
+#include "math.h"
+
 using namespace std;
 
 // error handler for odbc sql queries

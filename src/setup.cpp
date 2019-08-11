@@ -1,13 +1,14 @@
-#include "main.h"
-#include "util.h"
-#include "setup.h"
-#include "version.h"
-
 #include <iostream>
 #include <iomanip>
 #include <fstream>
 #include <getopt.h> // for getopt_long
 #include <iterator>
+
+#include "main.h"
+#include "util.hpp"
+#include "setup.hpp"
+#include "version.hpp"
+
 using namespace std;
 
 // default constructor of setup class

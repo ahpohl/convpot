@@ -1,8 +1,9 @@
-#include "util.h"
-#include "device.h"
-
 #include <iostream>
 #include <fstream>
+
+#include "util.hpp"
+#include "device.hpp"
+
 using namespace std;
 
 // get file type, ivcure, eis, etc.

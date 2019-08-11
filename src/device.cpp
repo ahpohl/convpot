@@ -1,10 +1,11 @@
-#include "main.h"
-#include "util.h"
-#include "device.h"
-
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+
+#include "main.h"
+#include "util.hpp"
+#include "device.hpp"
+
 using namespace std;
 
 // device constructor

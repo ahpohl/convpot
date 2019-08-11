@@ -1,7 +1,8 @@
-#include "main.h"
-#include "msql.h"
-
 #include <iostream>
+
+#include "main.h"
+#include "msql.hpp"
+
 using namespace std;
 
 int main(int argc, char* argv[])
